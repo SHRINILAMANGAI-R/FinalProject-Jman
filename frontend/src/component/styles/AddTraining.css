@@ -1,0 +1,84 @@
+/* AddEvent.css */
+
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+  }
+  
+  .create-event-container {
+    width: 400px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .create-event-container h2 {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .create-event-container input,
+  .create-event-container select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .create-event-container button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .create-event-container button:hover {
+    background-color: #0056b3;
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+  nav {
+    background-color: #333; /* Set background color */
+    overflow: hidden; /* Ensure the content does not overflow */
+  }
+  
+  nav ul {
+    list-style-type: none; /* Remove default list styles */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+  }
+  
+  nav ul li {
+    float: left; /* Float the list items to the left */
+  }
+  
+  nav ul li:last-child {
+    float: right; /* Float the last list item to the right */
+  }
+  
+  nav ul li button {
+    display: block; /* Display buttons as block elements */
+    background-color: #444; /* Set button background color */
+    color: #fff; /* Set button text color */
+    padding: 10px 20px; /* Add padding to the buttons */
+    border: none; /* Remove button borders */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    text-decoration: none; /* Remove default button text decoration */
+  }
+  
+  nav ul li button:hover {
+    background-color: #555; /* Change background color on hover */
+  }
+  
+  

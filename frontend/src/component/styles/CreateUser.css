@@ -1,0 +1,41 @@
+/* Styles for CreateUser component */
+.create-user-container {
+  width: 400px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.create-user-container h2 {
+  margin-bottom: 20px;
+}
+
+.create-user-container input,
+.create-user-container select {
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.create-user-container button {
+  background-color: #28a745;
+  color: #fff;
+  cursor: pointer;
+}
+
+.create-user-container button:hover {
+  background-color: #218838;
+}
+
+/* Styles for DatePicker */
+.react-datepicker-wrapper input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}

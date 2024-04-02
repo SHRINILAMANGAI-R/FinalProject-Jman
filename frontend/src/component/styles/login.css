@@ -1,0 +1,54 @@
+/* login.css */
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+ 
+.login-container {
+  display: flex;
+  width: 800px; /* Set total width of container */
+}
+ 
+.login-form-container,
+.change-password-container {
+  flex: 1; /* Make both containers take up equal space */
+  height: 300px; /* Increase the height */
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+ 
+.login-form-container h2 {
+  margin-bottom: 20px;
+}
+ 
+.login-form-container input[type="text"],
+.login-form-container input[type="password"],
+.login-form-container button,
+.change-password-container input[type="password"],
+.change-password-container button {
+  width: calc(100% - 40px);
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+ 
+.login-form-container button,
+.change-password-container button {
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Add transition for smooth hover effect */
+  width: 20%; /* Adjust the width to match input fields */
+  align-self: center;
+}
+ 
+.login-form-container button:hover,
+.change-password-container button:hover {
+  background-color: #0056b3;
+}
