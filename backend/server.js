@@ -170,24 +170,24 @@ app.put('/user-profile', async (req, res) => {
 app.post('/trainings/create', async (req, res) => {
   try {
     const {
-      TrainingName ,
-      TrainingDate ,
-      TrainingStartTime,
-      TrainingEndTime ,
-      TrainerName ,
-      ScheduledBy ,
-      ScheduledTo 
+      trainingName ,
+      trainingDate ,
+      trainingStartTime,
+      trainingEndTime ,
+      trainerName ,
+      scheduledBy ,
+      scheduledTo 
     } = req.body;
 
-    
+    console.log("*********************************************************",trainerName,trainingName)
     // Insert query to add a new training event
     const insertQuery = `
     INSERT INTO training ("TrainingName", "TrainingDate", "TrainingStartTime", "TrainingEndTime", "TrainerName", "ScheduledBy", "ScheduledTo")
     VALUES ($1, $2, $3, $4, $5, $6, $7);`;
-    console.log(req.body)
+    // console.log(req.body)
 
     // Run the insert query
-    const { rows } = await pool.query(insertQuery, [TrainingName, TrainingDate, TrainingStartTime, TrainingEndTime, TrainerName, ScheduledBy, ScheduledTo]);
+    const rows = await pool.query(insertQuery, [trainingName, trainingDate, trainingStartTime, trainingEndTime, trainerName, scheduledBy, scheduledTo]);
 
     // Respond with the ID of the newly created training event
     res.status(201).json({ message : "Done" });
