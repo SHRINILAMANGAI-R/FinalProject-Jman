@@ -3,8 +3,10 @@ import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './styles/CreateUser.css'; // Import CSS file for styling
+import {useNavigate} from 'react-router-dom';
 
 const CreateUser = () => {
+  const navigate =  useNavigate();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
@@ -27,12 +29,12 @@ const CreateUser = () => {
       });
       console.log(response.data.message);
       setAlertMessage(response.data.message);
-      // Redirect to login page after successful creation
-      window.location.href = '/login';
+      navigate("/AdminHome");
     } catch (error) {
       console.error('Error during user creation:', error.response.data.message);
       setAlertMessage(error.response.data.message);
     }
+
   };
 
   return (

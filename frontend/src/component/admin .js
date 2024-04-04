@@ -248,72 +248,53 @@
 
 
 import React, { useState } from 'react';
-import CreateUser from './CreateUser'; // Import CreateUser component
-import Profile from './profile'; // Import Profile component
-import Login from './login'; // Import Login component with capital L
-import PerformanceDetails from './PerformanceDetails'; // Import PerformanceDetails component
 import MyCalendar from './Schedule'; // Import Schedule component
+import {useNavigate} from 'react-router-dom';
+import "./styles/nav.css"
 
 const AdminHome = () => {
-  const [showCreateUser, setShowCreateUser] = useState(false);
-  const [showProfile, setShowProfile] = useState(false);
-  const [showPerformance, setShowPerformance] = useState(false); // State variable for performance details
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+
+  const navigate =  useNavigate();
 
   // Function to handle logout
   const handleLogout = () => {
     // Perform logout actions here (e.g., clear session, remove tokens, etc.)
     // Update login status to false
-    setIsLoggedIn(false);
+    navigate("/");
   };
   
 
   // Toggle functions to show/hide components
   const toggleCreateUser = () => {
-    setShowCreateUser(prevState => !prevState);
-    setShowProfile(false);
-    setShowPerformance(false); // Hide performance details when switching to other views
+    navigate("/createuser");
   };
 
   const toggleProfile = () => {
-    setShowProfile(prevState => !prevState);
-    setShowCreateUser(false);
-    setShowPerformance(false); // Hide performance details when switching to other views
+    navigate("/profile");
   };
 
   const togglePerformance = () => {
-    setShowPerformance(prevState => !prevState);
-    setShowCreateUser(false);
-    setShowProfile(false); // Hide profile when viewing performance details
+    navigate("/PerformanceDetails");
+  };
+  const toggleAddTraining = () => {
+    navigate("/AddEvent");
   };
 
   return (
     <div>
-      {isLoggedIn ? ( // Render AdminHome if logged in
-        <>
           <nav>
             <ul>
               <li><button onClick={toggleCreateUser}>Create User</button></li>
               <li><button onClick={toggleProfile}>Profile</button></li>
-              <li><button onClick={togglePerformance}>Performance</button></li> {/* Button for performance details */}
+              <li><button onClick={togglePerformance}>Performance</button></li> 
+              <li><button onClick={toggleAddTraining}>AddTraining</button></li>
               <li>
                 <button onClick={handleLogout}>Logout</button>
               </li>
             </ul>
           </nav>
           <h1>Welcome Admin!</h1>
-          {/* Conditional rendering of components */}
-          {showCreateUser && <CreateUser />}
-          {showProfile && <Profile />}
-          {showPerformance && <PerformanceDetails />}
           <MyCalendar />
-
- {/* Render PerformanceDetails component when showPerformance is true */}
-        </>
-      ) : (
-        // Render login component if not logged in
-        <Login />
-      )}
     </div>
   );
 };
