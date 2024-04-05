@@ -103,7 +103,7 @@ const Login = () => {
     }
   };
   
-  const [loggedIn, setLoggedIn] = useState(false);
+
   const handleChangePassword = async () => {
     try {
       // Make a POST request to the backend to change password
@@ -124,10 +124,6 @@ const Login = () => {
     }
   };
  
-  // If loggedIn is true, navigate to CreateUser page
-  if (loggedIn) {
-    navigate("/AdminHome")
-  }
  
   return (
     <div className="center-container"> {/* Center-align container */}

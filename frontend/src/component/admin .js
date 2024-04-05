@@ -247,7 +247,8 @@
 
 
 
-import React, { useState } from 'react';
+import React from 'react';
+import AdminCard from './AdminCard';
 import MyCalendar from './Schedule'; // Import Schedule component
 import {useNavigate} from 'react-router-dom';
 import "./styles/nav.css"
@@ -294,7 +295,7 @@ const AdminHome = () => {
             </ul>
           </nav>
           <h1>Welcome Admin!</h1>
-          <MyCalendar />
+          <AdminCard />
     </div>
   );
 };

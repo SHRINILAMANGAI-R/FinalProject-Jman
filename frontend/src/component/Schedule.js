@@ -647,6 +647,7 @@ const MyCalendar = () => {
     const startDate = document.getElementById('start-date').value;
     const endDate = document.getElementById('end-date').value;
     const eventColor = document.getElementById('event-color').value;
+    
 
     if (calendar) {
       calendar.addEvent({
@@ -678,6 +679,7 @@ const MyCalendar = () => {
     const startDate = document.getElementById('start-date-edit').value;
     const endDate = document.getElementById('end-date-edit').value;
     const eventColor = document.getElementById('event-color-edit').value;
+    
   
     // Update the selected event with new details
     const updatedEvent = {
@@ -686,7 +688,8 @@ const MyCalendar = () => {
       end: endDate,
       color: eventColor
     };
-  
+    
+    selectedEvent.remove();
   
     // Add the updated event to the calendar
     calendar.addEvent(updatedEvent);

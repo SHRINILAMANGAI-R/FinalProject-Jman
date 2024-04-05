@@ -165,12 +165,25 @@
 // }
 
 // export default AddEvent;
+
+
+
+
+
+
+
+
+
+
+
+
 import React, { useState } from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './styles/login.css';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function AddEvent() {
   const [show, setShow] = useState(true); // Show the modal by default
@@ -181,6 +194,8 @@ function AddEvent() {
   const [trainerName, setTrainerName] = useState('');
   const [scheduledTo, setScheduledTo] = useState('');
   const [scheduledBy, setScheduledBy] = useState('');
+  const [trainingAdded, setTrainingAdded] = useState(false); // Track if training is added
+  const navigate = useNavigate();
 
   const handleClose = () => {
     setShow(false);
@@ -192,6 +207,7 @@ function AddEvent() {
     setTrainerName('');
     setScheduledTo('');
     setScheduledBy('');
+    setTrainingAdded(false);
   };
 
   const handleSave = () => {
@@ -210,7 +226,11 @@ function AddEvent() {
     axios.post('http://localhost:3001/trainings/create', newTraining)
       .then((response) => {
         console.log('Success:', response.data);
-        handleClose();
+        setTrainingAdded(true); // Training added successfully
+        setTimeout(() => {
+          handleClose(); // Close modal after delay
+          navigate('/AdminHome'); // Redirect to AdminHome page using navigate
+        }, 2000); // Delay in milliseconds before closing modal
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -305,9 +325,12 @@ function AddEvent() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleSave}>
-            Save
-          </Button>
+          {trainingAdded && <div>Training Added Successfully!</div>}
+          {!trainingAdded && (
+            <Button variant="primary" onClick={handleSave}>
+              Save
+            </Button>
+          )}
         </Modal.Footer>
       </div>
     </Modal>
@@ -315,4 +338,3 @@ function AddEvent() {
 }
 
 export default AddEvent;
-

@@ -13,6 +13,8 @@
     "@mui/material": "^5.15.15",
     "express": "^4.19.2",
     "nodemailer": "^6.9.13",
-    "pg": "^8.11.3"
+    "pg": "^8.11.3",
+    "primeicons": "^7.0.0",
+    "primereact": "^10.6.2"
   }
 }

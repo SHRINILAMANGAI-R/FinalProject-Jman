@@ -8,7 +8,8 @@ import PerformanceDetails from './component/PerformanceDetails';
 import AdminHome from './component/admin ';
 import InternHome from './component/Intern';
 import EmployeeHome from './component/emp';
-import card from './component/card';
+import InternCard from './component/InternCard';
+import EmpCard from './component/EmpCard';
 import AddEvent from './component/AddTraining'
 
 function App() {
@@ -22,7 +23,8 @@ function App() {
         <Route path="/AdminHome" element={<AdminHome/>} />
         <Route path="/InternHome" element={<InternHome/>} />
         <Route path="/EmployeeHome" element={<EmployeeHome/>} />
-        <Route path="/card" element={<card/>}/>
+        <Route path="/InternCard" element={<InternCard/>}/>
+        <Route path="/EmpCard" element={<EmpCard/>}/>
         <Route path="/AddEvent" element={<AddEvent/>}/>
       </Routes>
     </div>

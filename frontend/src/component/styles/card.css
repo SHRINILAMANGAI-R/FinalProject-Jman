@@ -1,0 +1,63 @@
+.training-list-container {
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #BCC6DE;
+  }
+   
+  .training-list-heading {
+    text-align: center;
+    margin-bottom: 25px;
+   
+  }
+   
+  .training-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+   
+  .training-card {
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+  }
+   
+  .training-card-title {
+    font-weight: 600;
+    padding-bottom: 10px;
+    margin-top: 0;
+  color: black;
+  }
+   
+  .training-list-heading {
+    text-align: center;
+  }
+   
+  .training-category {
+    margin-bottom: 30px;
+  }
+   
+  .training-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+  }
+   
+  .training-card {
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: calc(33.33% - 20px); /* Adjust card width here */
+    max-width: 300px; /* Maximum width for each card */
+    min-width: 250px; /* Minimum width for each card */
+    flex: 1 1 auto; /* Allow cards to grow and shrink */
+  }
+   
+  .training-card-title {
+    margin-top: 0;
+    color: #333;
+  }

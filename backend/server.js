@@ -179,12 +179,12 @@ app.post('/trainings/create', async (req, res) => {
       scheduledTo 
     } = req.body;
 
-    console.log("*********************************************************",trainerName,trainingName)
+   
     // Insert query to add a new training event
     const insertQuery = `
     INSERT INTO training ("TrainingName", "TrainingDate", "TrainingStartTime", "TrainingEndTime", "TrainerName", "ScheduledBy", "ScheduledTo")
     VALUES ($1, $2, $3, $4, $5, $6, $7);`;
-    // console.log(req.body)
+    
 
     // Run the insert query
     const rows = await pool.query(insertQuery, [trainingName, trainingDate, trainingStartTime, trainingEndTime, trainerName, scheduledBy, scheduledTo]);
@@ -197,9 +197,37 @@ app.post('/trainings/create', async (req, res) => {
   }
 });
 
+// Endpoint to fetch training data for card
+app.get('/trainings', async (req, res) => {
+  try {
+    const client = await pool.connect();
+    const result = await client.query('SELECT * FROM training');
+    const trainings = result.rows;
+    client.release();
+    res.json(trainings);
+  } catch (error) {
+    console.error('Error fetching training data:', error);
+    res.status(500).json({ error: 'An error occurred while fetching training data' });
+  }
+});
 
 
 
+// DELETE endpoint to remove a training record
+app.delete('/Admintrainings/:id', async (req, res) => {
+  const { id } = req.params; // Get the training ID from the URL parameters
+
+  try {
+    const client = await pool.connect();
+    // Delete the training record from the database using its ID
+    await client.query('DELETE FROM training WHERE t_id = $1', [id]); // Replace <correct_column_name> with the actual column name
+    client.release();
+    res.status(200).json({ message: 'Training record deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting training record:', error);
+    res.status(500).json({ error: 'An error occurred while deleting training record' });
+  }
+});
 
 
 
