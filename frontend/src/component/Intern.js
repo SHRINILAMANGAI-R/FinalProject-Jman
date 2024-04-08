@@ -25,8 +25,10 @@ const InternHome = () => {
     <div>
       <nav>
         <ul>
+          <li><button onClick={() => navigate("/InternHome")}>Home</button></li>
           <li><button onClick={() => navigate("/profile")}>Profile</button></li>
-          <li><button onClick={() => navigate("/PerformanceDetails")}>Performance</button></li>
+          <li><button onClick={() => navigate("/Performance")}>Performance</button></li>
+          <li><button onClick={() => navigate("/Assessment")}>Assessments</button></li>
           <li><button onClick={() => navigate("/")}>Logout</button></li>
         </ul>
       </nav>

@@ -17,7 +17,8 @@ const Profile = () => {
     // Fetch user data from backend when the component mounts
     const fetchUserData = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/user-profile-fetch'); // Assuming this endpoint returns user data
+        const response = await axios.get('http://localhost:3001/user-profile-fetch');
+        console.log(response.data) 
         setUserData(response.data);
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -112,7 +113,6 @@ const Profile = () => {
 };
 
 export default Profile;
-
 
 
 // import React, { useState, useEffect } from 'react';

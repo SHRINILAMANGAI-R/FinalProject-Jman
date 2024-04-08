@@ -142,13 +142,17 @@ app.post('/change-password', async (req, res) => {
 app.get('/user-profile-fetch', async (req, res) => {
   try {
     // Query the database to fetch user data
-    const userData = await pool.query('SELECT name, email, username, dob, password, role, department FROM users WHERE id = $1', [req.body.username]); // Assuming userId is provided in the request
-    res.json(userData.rows[0]);
+    const client = await pool.connect();
+    const result = await client.query('SELECT name, email, username, dob, role,password ,department FROM users WHERE id = $1', [req.body.username]);
+    const user = result.rows;
+    client.release();
+    res.json(user[0]);
   } catch (error) {
     console.error('Error fetching user profile:', error);
     res.status(500).json({ message: 'Error fetching user profile' });
   }
 });
+
 
 // Endpoint to update user profile data
 app.put('/user-profile', async (req, res) => {
@@ -220,7 +224,7 @@ app.delete('/Admintrainings/:id', async (req, res) => {
   try {
     const client = await pool.connect();
     // Delete the training record from the database using its ID
-    await client.query('DELETE FROM training WHERE t_id = $1', [id]); // Replace <correct_column_name> with the actual column name
+    await client.query('DELETE FROM training WHERE t_id = $1', [t_id]); 
     client.release();
     res.status(200).json({ message: 'Training record deleted successfully' });
   } catch (error) {
@@ -229,7 +233,91 @@ app.delete('/Admintrainings/:id', async (req, res) => {
   }
 });
 
+// GET endpoint to fetch events
+app.get('/api/events', async (req, res) => {
+  try {
+    const client = await pool.connect();
+    const result = await client.query('SELECT * FROM training');
+    const events = result.rows;
+    client.release();
+    res.json(events);
+  } catch (error) {
+    console.error('Error fetching events:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+// Create a training event
+app.post('/api/training', async (req, res) => {
+  const { eventName, trainingDate, startTime, endTime, trainerName, scheduledBy, scheduledTo} = req.body;
 
+  try {
+    // Connect to the PostgreSQL database
+    const client = await pool.connect();
+
+    // Insert the training details into the database
+    const result = await client.query(
+      'INSERT INTO training ("TrainingName", "TrainingDate", "TrainingStartTime", "TrainingEndTime", "TrainerName", "ScheduledBy", "ScheduledTo") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
+      [eventName, trainingDate, startTime, endTime, trainerName, scheduledBy, scheduledTo]
+    );
+    const newEvent = result.rows[0];
+    // Release the client connection
+    client.release();
+
+    // Send a success response with the inserted data
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    // Handle errors
+    console.error('Error adding Training:', error);
+    res.status(500).send('An error occurred while adding the Training');
+  }
+});
+
+// Update an existing training event
+app.put('/api/training/:eventId', async (req, res) => {
+  const eventId = req.params.eventId;
+  const { eventName, trainingDate, startTime, endTime, trainerName, scheduledBy, scheduledTo} = req.body;
+  try {
+    const client = await pool.connect();
+    const result = await client.query(
+      'UPDATE training SET "TrainingName" = $1, "TrainingDate" = $2, "TrainingStartTime" = $3, "TrainingEndTime" = $4, "TrainerName" = $5, "ScheduledBy" = $6, "ScheduledTo" = $7 WHERE t_id = $8 RETURNING *',
+      [eventName, trainingDate, startTime, endTime, trainerName, scheduledBy, scheduledTo, eventId]
+    );
+    const updatedEvent = result.rows[0];
+    client.release();
+    res.status(200).json(updatedEvent);
+  } catch (error) {
+    console.error('Error updating event:', error);
+    res.status(500).json({ error: 'An error occurred while updating the event' });
+  }
+});
+
+// Delete an existing training event
+app.delete('/api/training/:eventId', async (req, res) => {
+  const eventId = req.params.eventId;
+  try {
+    const client = await pool.connect();
+    await client.query('DELETE FROM training WHERE t_id = $1', [eventId]);
+    client.release();
+    res.status(204).send(); // No content
+  } catch (error) {
+    console.error('Error deleting event:', error);
+    res.status(500).json({ error: 'An error occurred while deleting the event' });
+  }
+});
+
+
+// Route to fetch user data
+app.get('/api/users', async (req, res) => {
+  try {
+    const client = await pool.connect();
+    // Assuming you have a 'users' table with columns: id, name, email, username, dob, role, department
+    const users = await client.query('SELECT id, name, email, username, dob, role, department FROM users');
+    res.json(users);
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 
 

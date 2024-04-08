@@ -4,6 +4,7 @@ import './styles/card.css';
 
 function InternTrainingList() {
     const [internTrainings, setInternTrainings] = useState([]);
+    const [showFeedbackLink, setShowFeedbackLink] = useState(false); // State to manage visibility of feedback link
 
     useEffect(() => {
         fetchTrainings();
@@ -18,7 +19,10 @@ function InternTrainingList() {
             console.error('Error fetching data:', error);
         }
     };
-    
+
+    const handleCheckboxChange = () => {
+        setShowFeedbackLink(!showFeedbackLink);
+    };
 
     return (
         <div className="training-list-container">
@@ -27,12 +31,24 @@ function InternTrainingList() {
                 {internTrainings.length > 0 ? (
                     internTrainings.map(training => (
                         <div className="training-card card" key={training.id}>
-                            <h2 className="training-card-title">{training.TrainingName}</h2>
-                            <p><strong>Date:</strong> {training.TrainingDate}</p>
-                            <p><strong>Time:</strong> {training.TrainingStartTime} - {training.TrainingEndTime}</p>
-                            <p><strong>Trainer:</strong> {training.TrainerName}</p>
-                            <p><strong>Scheduled By:</strong> {training.ScheduledBy}</p>
-                            <p><strong>Scheduled To:</strong> {training.ScheduledTo}</p>
+                            <div className="card-header">
+                                <h2 className="training-card-title">
+                                    {training.TrainingName}
+                                    
+                                </h2>
+                            </div>
+                            <div className="card-body">
+                                <p><strong>Date:</strong> {training.TrainingDate}</p>
+                                <p><strong>Time:</strong> {training.TrainingStartTime} - {training.TrainingEndTime}</p>
+                                <p><strong>Trainer:</strong> {training.TrainerName}</p>
+                                <p><strong>Scheduled By:</strong> {training.ScheduledBy}</p>
+                                <p><strong>Scheduled To:</strong> {training.ScheduledTo}</p>
+                            </div>
+                            <div className="card-footer">
+                            {showFeedbackLink && <a href="#">Feedback</a>}
+                                <input type="checkbox" id="feedbackCheckbox" checked={showFeedbackLink} onChange={handleCheckboxChange} />
+                                <label htmlFor="feedbackCheckbox">Module Completed</label>
+                            </div>
                         </div>
                     ))
                 ) : (
@@ -44,6 +60,7 @@ function InternTrainingList() {
 }
 
 export default InternTrainingList;
+
 
 
 
