@@ -319,6 +319,30 @@ app.get('/api/users', async (req, res) => {
   }
 });
 
+// Endpoint to update ModuleCompletion count
+app.put('/trainings/:id/module-completion', async (req, res) => {
+  const trainingId = req.params.id;
+
+  try {
+      // Find the training by ID
+      const training = await Training.findByPk(trainingId); // <-- Corrected here
+
+      if (!training) {
+          return res.status(404).json({ error: 'Training not found' });
+      }
+
+      // Update ModuleCompletion count
+      training.ModuleCompletion = training.ModuleCompletion ? training.ModuleCompletion + 1 : 1;
+      await training.save();
+
+      return res.status(200).json({ message: 'Module completion count updated successfully' });
+  } catch (error) {
+      console.error('Error updating module completion count:', error);
+      return res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
 
 
 app.listen(PORT, () => {

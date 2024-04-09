@@ -19,7 +19,7 @@ const AdminHome = () => {
               <li><button onClick={() => navigate("/profile")}>Profile</button></li>
               <li><button onClick={() => navigate("/PerformanceDetails")}>Performance</button></li> 
               {/* <li><button onClick={() => navigate("/AddEvent")}>AddTraining</button></li> */}
-              <li><button onClick={() => navigate("/Users")}>Users</button></li>
+              <li><button onClick={() => navigate("/User")}>Users</button></li>
               <li><button onClick={() => navigate("/")}>Logout</button></li>
             </ul>
           </nav>

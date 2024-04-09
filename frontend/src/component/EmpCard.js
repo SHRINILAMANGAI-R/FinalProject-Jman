@@ -5,6 +5,7 @@ import './styles/card.css'; // Import CSS file for styling
 
 function EmployeeTrainingList() {
     const [employeeTrainings, setEmployeeTrainings] = useState([]);
+    const [showFeedbackLink, setShowFeedbackLink] = useState(false);
 
     useEffect(() => {
         fetchEmployeeTrainings();
@@ -19,6 +20,10 @@ function EmployeeTrainingList() {
             console.error('Error fetching data:', error);
         }
     };
+    const handleCheckboxChange = () => {
+        setShowFeedbackLink(!showFeedbackLink);
+    };
+
     
 
     return (
@@ -28,12 +33,19 @@ function EmployeeTrainingList() {
                 {employeeTrainings.length > 0 ? (
                     employeeTrainings.map(training => (
                         <div className="training-card card" key={training.id}>
-                            <h2 className="training-card-title">{training.TrainingName}</h2>
+                            <div className="card-header">
+                            <h2 className="training-card-title">{training.TrainingName}</h2></div>
+                            <div className="card-body">
                             <p><strong>Date:</strong> {training.TrainingDate}</p>
                             <p><strong>Time:</strong> {training.TrainingStartTime} - {training.TrainingEndTime}</p>
                             <p><strong>Trainer:</strong> {training.TrainerName}</p>
                             <p><strong>Scheduled By:</strong> {training.ScheduledBy}</p>
-                            <p><strong>Scheduled To:</strong> {training.ScheduledTo}</p>
+                            <p><strong>Scheduled To:</strong> {training.ScheduledTo}</p></div>
+                            <div className="card-footer">
+                            {showFeedbackLink && <a href="#">Feedback</a>}
+                                <input type="checkbox" id="feedbackCheckbox" checked={showFeedbackLink} onChange={handleCheckboxChange} />
+                                <label htmlFor="feedbackCheckbox">Module Completed</label>
+                            </div>
                         </div>
                     ))
                 ) : (
