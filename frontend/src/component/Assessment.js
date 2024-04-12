@@ -1,4 +1,6 @@
 import React from 'react';
+import "./styles/nav.css"
+import { useNavigate } from 'react-router-dom';
 
 const topics = [
   { name: 'UI/UX', quizLink: 'https://thedesignquiz.com/' },
@@ -12,8 +14,17 @@ const topics = [
 ];
 
 const Assessment = () => {
+  const navigate =  useNavigate();
   return (
     <div>
+        <nav>
+        <ul>
+          <li><button onClick={() => navigate("/profile")}>Profile</button></li>
+          <li><button onClick={() => navigate("/Performance")}>Performance</button></li>
+          <li><button onClick={() => navigate("/Assessment")}>Assessments</button></li>
+          <li><button onClick={() => navigate("/")}>Logout</button></li>
+        </ul>
+      </nav>
       <h2>Online Quiz Links:</h2>
       <table>
         <thead>

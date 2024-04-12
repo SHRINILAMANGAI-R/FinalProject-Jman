@@ -26,7 +26,7 @@ const transporter = nodemailer.createTransport({
       pass: 'hhtu gkpb meer adyf',
     },
   });
- 
+
 // Login endpoint
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
@@ -138,20 +138,52 @@ app.post('/change-password', async (req, res) => {
 //   }
 // });
 
+
+
 // Endpoint to fetch user profile data
-app.get('/user-profile-fetch', async (req, res) => {
+// app.get('/user-profile-fetch/:user', async (req, res) => {
+//   const user=req.params;
+//   console.log("username in profile",user)
+//   try {
+//     // Query the database to fetch user data
+//     const client = await pool.connect();
+//     const result = await client.query('SELECT name, email, username, dob, role, password, department FROM users WHERE username= $1', [user]);
+//     // console.log('response after passing username', result.username);
+//     // console.log('Query result:', result.rows);
+// return res.status(200).send(result)
+//     // const user = result.rows;
+//     client.release();
+//     // if (user.length > 0) {
+//     //   res.json(user[0]);
+//     // } else {
+//     //   res.status(404).json({ message: 'User not found' });
+//     // }
+//   } catch (error) {
+//     console.error('Error fetching user profile:', error.message);
+//     res.status(500).json({ message: 'Error fetching user profile' });
+//   }
+// });
+
+app.get('/user-profile-fetch/:user', async (req, res) => {
+  const username = req.params.user;
   try {
     // Query the database to fetch user data
     const client = await pool.connect();
-    const result = await client.query('SELECT name, email, username, dob, role,password ,department FROM users WHERE id = $1', [req.body.username]);
-    const user = result.rows;
+    const result = await client.query('SELECT * FROM users WHERE username = $1', [username]);
     client.release();
-    res.json(user[0]);
+
+    if (result.rows.length > 0) {
+      return res.status(200).json(result.rows);
+    } else {
+      console.log("getting empty array as the reponse")
+      return res.status(404).json({ message: 'User not found' });
+    }
   } catch (error) {
-    console.error('Error fetching user profile:', error);
-    res.status(500).json({ message: 'Error fetching user profile' });
+    console.error('Error fetching user profile:', error.message);
+    return res.status(500).json({ message: 'Error fetching user profile' });
   }
 });
+
 
 
 // Endpoint to update user profile data
@@ -342,7 +374,28 @@ app.put('/trainings/:id/module-completion', async (req, res) => {
   }
 });
 
-
+// DELETE route to delete a user by ID
+app.delete('/api/users/:userId', async (req, res) => {
+  const userId = req.params.userId;
+ 
+  try {
+    const client = await pool.connect();
+    const result = await client.query('DELETE FROM users WHERE id = $1', [userId]);
+ 
+    // Release the database connection
+    client.release();
+ 
+    // Check if any rows were affected to determine if the user was deleted successfully
+    if (result.rowCount > 0) {
+      res.status(200).json({ message: 'User deleted successfully' });
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 
 app.listen(PORT, () => {

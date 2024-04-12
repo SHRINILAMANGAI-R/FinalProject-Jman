@@ -1,7 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
+import "./styles/nav.css"
+import { useNavigate } from 'react-router-dom';
 
 const Performance = () => {
+  const navigate =  useNavigate();
   const chartRef = useRef(null);
   const myChart = useRef(null); 
 
@@ -50,6 +53,14 @@ const Performance = () => {
 
   return (
     <div>
+        <nav>
+        <ul>
+          <li><button onClick={() => navigate("/profile")}>Profile</button></li>
+          <li><button onClick={() => navigate("/Performance")}>Performance</button></li>
+          <li><button onClick={() => navigate("/Assessment")}>Assessments</button></li>
+          <li><button onClick={() => navigate("/")}>Logout</button></li>
+        </ul>
+      </nav>
       <h2>Marks Scored in Courses</h2>
       <canvas ref={chartRef} width="200" height="200"></canvas> {/* Set smaller dimensions */}
     </div>

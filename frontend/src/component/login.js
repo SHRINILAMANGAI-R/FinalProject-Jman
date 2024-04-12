@@ -76,6 +76,10 @@ const Login = () => {
         username,
         password,
       });
+
+      localStorage.setItem('User', response.data.username)
+
+      console.log("after login--",response)
   
       // If the response status is 200, login is successful
       if (response.status === 200) {

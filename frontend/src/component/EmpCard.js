@@ -1,11 +1,11 @@
-// EmployeeTrainingList.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'; // Import Axios for HTTP requests
 import './styles/card.css'; // Import CSS file for styling
 
 function EmployeeTrainingList() {
     const [employeeTrainings, setEmployeeTrainings] = useState([]);
-    const [showFeedbackLink, setShowFeedbackLink] = useState(false);
+    //const [showFeedbackLink, setShowFeedbackLink] = useState(false);
+    const [selectedTrainingIds, setSelectedTrainingIds] = useState([]);
 
     useEffect(() => {
         fetchEmployeeTrainings();
@@ -20,10 +20,23 @@ function EmployeeTrainingList() {
             console.error('Error fetching data:', error);
         }
     };
-    const handleCheckboxChange = () => {
-        setShowFeedbackLink(!showFeedbackLink);
-    };
+    const handleCheckboxChange = async (trainingId) => {
+        try {
+            // Update selected training IDs state
+            setSelectedTrainingIds(prevSelectedTrainingIds => {
+                if (prevSelectedTrainingIds.includes(trainingId)) {
+                    return prevSelectedTrainingIds.filter(id => id !== trainingId);
+                } else {
+                    return [...prevSelectedTrainingIds, trainingId];
+                }
+            });
 
+            // Call backend endpoint to update ModuleCompletion count
+            await axios.put(`http://localhost:3001/trainings/${trainingId}/module-completion`);
+        } catch (error) {
+            console.error('Error updating module completion count:', error);
+        }
+    };
     
 
     return (
@@ -32,7 +45,7 @@ function EmployeeTrainingList() {
             <div className="training-cards-container">
                 {employeeTrainings.length > 0 ? (
                     employeeTrainings.map(training => (
-                        <div className="training-card card" key={training.id}>
+                        <div className="training-card card" key={training.t_id}>
                             <div className="card-header">
                             <h2 className="training-card-title">{training.TrainingName}</h2></div>
                             <div className="card-body">
@@ -42,9 +55,9 @@ function EmployeeTrainingList() {
                             <p><strong>Scheduled By:</strong> {training.ScheduledBy}</p>
                             <p><strong>Scheduled To:</strong> {training.ScheduledTo}</p></div>
                             <div className="card-footer">
-                            {showFeedbackLink && <a href="#">Feedback</a>}
-                                <input type="checkbox" id="feedbackCheckbox" checked={showFeedbackLink} onChange={handleCheckboxChange} />
-                                <label htmlFor="feedbackCheckbox">Module Completed</label>
+                            {selectedTrainingIds.includes(training.t_id) && <a href="#">Feedback</a>}
+                            <input type="checkbox" id={`feedbackCheckbox-${training.t_id}`} checked={selectedTrainingIds.includes(training.t_id)} onChange={() => handleCheckboxChange(training.t_id)} />
+                                <label htmlFor={`feedbackCheckbox-${training.t_id}`}>Module Completed</label>
                             </div>
                         </div>
                     ))

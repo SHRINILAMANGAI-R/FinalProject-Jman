@@ -518,7 +518,7 @@ const MyCalendar = () => {
     <div>
       <header className="cd__intro">
         <div className="cd__action">
-          <h1>Training Schedule</h1>
+          <h1>Schedule Training</h1>
           <button className="btn btn-primary" onClick={handleModal}>Add Training</button>
         </div>
       </header>

@@ -220,10 +220,13 @@
 // export default PerformanceDetails;
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as XLSX from 'xlsx';
 import './styles/PerformanceDetails.css';
+import "./styles/nav.css";
 
 const PerformanceDetails = () => {
+  const navigate = useNavigate();
   const [performanceData, setPerformanceData] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
@@ -282,6 +285,17 @@ const PerformanceDetails = () => {
   });
 
   return (
+    <div>
+    <nav className="navbar">
+      <ul>
+        <li><button onClick={() => navigate("/AdminHome")}>Home</button></li>
+        <li><button onClick={() => navigate("/createuser")}>Create User</button></li>
+        <li><button onClick={() => navigate("/profile")}>Profile</button></li>
+        <li><button onClick={() => navigate("/PerformanceDetails")}>Performance</button></li>
+        <li><button onClick={() => navigate("/User")}>Users</button></li>
+        <li><button onClick={() => navigate("/")}>Logout</button></li>
+      </ul>
+    </nav>
     <div className="table-container">
       <h2>Performance Details</h2>
       <div className="table-controls">
@@ -350,6 +364,7 @@ const PerformanceDetails = () => {
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 };
