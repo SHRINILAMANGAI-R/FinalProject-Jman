@@ -14,6 +14,7 @@ import AddEvent from './component/AddTraining'
 import Assessment from './component/Assessment';
 import Performance from './component/Performance';
 import User from './component/User';
+import Feedback from './component/feedback';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path="/Assessment" element={<Assessment/>}/>
         <Route path="/Performance" element={<Performance/>}/>
         <Route path="/User" element={<User/>}/>
+        <Route path="/Feedback" element={<Feedback/>}/>
       </Routes>
     </div>
   );

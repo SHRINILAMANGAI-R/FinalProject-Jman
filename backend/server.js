@@ -187,11 +187,11 @@ app.get('/user-profile-fetch/:user', async (req, res) => {
 
 
 // Endpoint to update user profile data
-app.put('/user-profile', async (req, res) => {
+app.put('/user-profile/:user', async (req, res) => {
   const { name, email, username, dob, password, role, department } = req.body;
   try {
     // Update user data in the database
-    await pool.query('UPDATE users SET name = $1, email = $2, username = $3, dob = $4, password = $5, role = $6, department = $7 WHERE id = $8', [name, email, username, dob, password, role, department, req.userId]); // Assuming userId is provided in the request
+    await pool.query('UPDATE users SET name = $1, email = $2, username = $3, dob = $4, password = $5, role = $6, department = $7 WHERE username = $8', [name, email, username, dob, password, role, department, req.params.user]); // Assuming userId is provided in the request
     res.json({ message: 'User profile updated successfully' });
   } catch (error) {
     console.error('Error updating user profile:', error);
@@ -199,6 +199,86 @@ app.put('/user-profile', async (req, res) => {
   }
 });
 
+
+
+app.get('/user-profile-fetch/:user', async (req, res) => {
+  const user=req.params;
+  console.log("username in profile",user)
+  try {
+    // Query the database to fetch user data
+    const client = await pool.connect();
+    const result = await client.query('SELECT name, email, username, dob, role, password, department FROM users WHERE username= $1', [user]);
+    // console.log('response after passing username', result.username);
+    // console.log('Query result:', result.rows);
+return res.status(200).send(result)
+    // const user = result.rows;
+    client.release();
+    // if (user.length > 0) {
+    //   res.json(user[0]);
+    // } else {
+    //   res.status(404).json({ message: 'User not found' });
+    // }
+  } catch (error) {
+    console.error('Error fetching user profile:', error.message);
+    res.status(500).json({ message: 'Error fetching user profile' });
+  }
+});
+
+
+
+app.get('/user-profile-fetch/:user', async (req, res) => {
+  const username = req.params.user;
+  console.log("username in profile", username);
+  try {
+    // Query the database to fetch user data
+    const client = await pool.connect();
+    const result = await client.query('SELECT * FROM users WHERE username = $1', [username]);
+    client.release();
+
+    if (result.rows.length > 0) {
+      return res.status(200).json(result.rows);
+    } else {
+      return res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error) {
+    console.error('Error fetching user profile:', error.message);
+    return res.status(500).json({ message: 'Error fetching user profile' });
+  }
+});
+
+
+// On the backend, parse the request body properly
+// Endpoint to update user profile data
+app.put('/user-profile', async (req, res) => {
+  const { name, email, username, dob, password, role, department } = req.body;
+  try {
+    // Update user data in the database
+    await pool.query('UPDATE users SET name = $1, email = $2, username = $3, dob = $4, password = $5, role = $6, department = $7 WHERE username = $8', [name, email, username, dob, password, role, department, req.params.user]); // Assuming userId is provided in the request
+    res.json({ message: 'User profile updated successfully' });
+  } catch (error) {
+    console.error('Error updating user profile:', error);
+    res.status(500).json({ message: 'Error updating user profile' });
+  }
+});
+
+
+// Endpoint to store feedback
+app.post('/feedback', async (req, res) => {
+  const {id, Name, TrainingName, TrainerName, Feedback } = req.body;
+
+  try {
+    // Insert feedback into the database
+    await pool.query(
+      'INSERT INTO feedback (id, "Name", "TrainingName", "TrainerName", "Feedback") VALUES ($1, $2, $3, $4, $5)',
+      [id, Name, TrainingName, TrainerName, Feedback]
+    );
+
+    res.status(201).json({ message: 'Feedback stored successfully', feedbackId });
+  } catch (error) {
+    console.error('Error storing feedback:', error);
+    res.status(500).json({ message: 'Error storing feedback' });
+  }
+});
 
 
 

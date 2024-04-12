@@ -58,7 +58,7 @@ function InternTrainingList() {
                                 <p><strong>Scheduled To:</strong> {training.ScheduledTo}</p>
                             </div>
                             <div className="card-footer">
-                                {selectedTrainingIds.includes(training.t_id) && <a href="#">Feedback</a>}
+                                {selectedTrainingIds.includes(training.t_id) && <a href="/Feedback">Feedback</a>}
                                 <input type="checkbox" id={`feedbackCheckbox-${training.t_id}`} checked={selectedTrainingIds.includes(training.t_id)} onChange={() => handleCheckboxChange(training.t_id)} />
                                 <label htmlFor={`feedbackCheckbox-${training.t_id}`}>Module Completed</label>
                             </div>

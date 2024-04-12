@@ -251,6 +251,7 @@ const Profile = () => {
     department: ''
   });
   const [loading, setLoading] = useState(true);
+  
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -267,7 +268,13 @@ const Profile = () => {
 
     fetchUserData();
   }, []);
-
+  const adjustDateToTimeZone = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Add leading zero if needed
+    const day = String(date.getDate()).padStart(2, '0'); // Add leading zero if needed
+    return `${year}-${month}-${day}`;
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserData(prevData => ({
@@ -279,7 +286,9 @@ const Profile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put('http://localhost:3001/user-profile', userData); // Assuming this endpoint updates user data
+      const user = localStorage.getItem('User');
+      
+      await axios.put(`http://localhost:3001/user-profile/${user}`, userData); // Send userData directly
       alert('Profile updated successfully');
     } catch (error) {
       console.error('Error updating profile:', error);
@@ -322,7 +331,7 @@ const Profile = () => {
           type="date"
           placeholder="Date of Birth"
           name="dob"
-          value={userData.dob && userData.dob.substring(0, 10)} // Add conditional check for userData.dob
+          value={adjustDateToTimeZone(userData.dob)} // Add conditional check for userData.dob
           onChange={handleChange}
         />
         <br />
