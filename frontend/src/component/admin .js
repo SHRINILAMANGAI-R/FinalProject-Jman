@@ -1,5 +1,4 @@
 import React from 'react';
-import AdminCard from './AdminCard';
 import MyCalendar from './Schedule'; // Import Schedule component
 import {useNavigate} from 'react-router-dom';
 import "./styles/nav.css"
@@ -23,7 +22,7 @@ const AdminHome = () => {
               <li><button onClick={() => navigate("/")}>Logout</button></li>
             </ul>
           </nav>
-          <h1>Welcome Admin!</h1>
+          <h1 style={{ textAlign: 'center' }}>Welcome Admin!</h1>
           <MyCalendar />
     </div>
   );

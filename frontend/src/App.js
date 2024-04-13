@@ -10,7 +10,6 @@ import InternHome from './component/Intern';
 import EmployeeHome from './component/emp';
 import InternCard from './component/InternCard';
 import EmpCard from './component/EmpCard';
-import AddEvent from './component/AddTraining'
 import Assessment from './component/Assessment';
 import Performance from './component/Performance';
 import User from './component/User';
@@ -29,7 +28,6 @@ function App() {
         <Route path="/EmployeeHome" element={<EmployeeHome/>} />
         <Route path="/InternCard" element={<InternCard/>}/>
         <Route path="/EmpCard" element={<EmpCard/>}/>
-        <Route path="/AddEvent" element={<AddEvent/>}/>
         <Route path="/Assessment" element={<Assessment/>}/>
         <Route path="/Performance" element={<Performance/>}/>
         <Route path="/User" element={<User/>}/>

@@ -27,7 +27,6 @@ const CreateUser = () => {
         role,
         department,
       });
-      console.log(response.data.message);
       setAlertMessage(response.data.message);
       navigate("/AdminHome");
     } catch (error) {
@@ -44,7 +43,6 @@ const CreateUser = () => {
           <li><button onClick={() => navigate("/createuser")}>Create User</button></li>
           <li><button onClick={() => navigate("/profile")}>Profile</button></li>
           <li><button onClick={() => navigate("/PerformanceDetails")}>Performance</button></li>
-          {/* <li><button onClick={() => navigate("/AddEvent")}>AddTraining</button></li> */}
           <li><button onClick={() => navigate("/User")}>Users</button></li>
           <li><button onClick={() => navigate("/")}>Logout</button></li>
         </ul>

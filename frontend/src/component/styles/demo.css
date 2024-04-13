@@ -1,57 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 @import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
-* {
-  margin: 0;
-  padding: 0;
-}
-
-*, *::before, *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: inherit;
-}
-
-body {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Roboto', sans-serif;
-  font-style: normal;
-  font-weight: 300;
-  /*font-smoothing: antialiased;*/
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-size: 15px;
-  background: #eee;
-}
-
-.cd__intro, .cd__credit {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  background: #fff;
-  color: #333;
-  line-height: 1.5;
-  text-align: center;
-}
-
-.cd__intro {
-  padding: 60px 30px;
-  margin-bottom: 15px;
-  flex-direction: column;
-}
-
-.cd__intro h1 {
-  font-size: 36pt; /* Increase font size */
-  padding-bottom: 15px;
-}
-
-.cd__intro p {
-  font-size: 18px; /* Increase font size */
-}
 
 .cd__action {
   text-align: center;

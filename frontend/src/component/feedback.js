@@ -14,6 +14,12 @@ const Feedback = () => {
 
   const handleSubmitFeedback = async () => {
     try {
+      // Check if the required fields are filled
+      if (!id || !name || !trainingName || !trainerName || !feedback) {
+        setAlertMessage("Please fill in all fields.");
+        return;
+      }
+  
       const response = await axios.post('http://localhost:3001/feedback', {
         id,
         name,
@@ -25,16 +31,14 @@ const Feedback = () => {
       setAlertMessage(response.data.message);
       
     } catch (error) {
-      console.error('Error submitting feedback:', error.response.data.message);
+      console.error('Error storing feedback:', error.response.data.message);
       setAlertMessage(error.response.data.message);
     }
   };
-
   return (
     <div>
       <nav className="navbar">
         <ul>
-
           <li><button onClick={() => navigate("/profile")}>Profile</button></li>
           <li><button onClick={() => navigate("/Performance")}>Performance</button></li>
           <li><button onClick={() => navigate("/Assessment")}>Assessments</button></li>

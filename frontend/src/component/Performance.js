@@ -53,18 +53,25 @@ const Performance = () => {
 
   return (
     <div>
-        <nav>
-        <ul>
-          <li><button onClick={() => navigate("/profile")}>Profile</button></li>
-          <li><button onClick={() => navigate("/Performance")}>Performance</button></li>
-          <li><button onClick={() => navigate("/Assessment")}>Assessments</button></li>
-          <li><button onClick={() => navigate("/")}>Logout</button></li>
-        </ul>
-      </nav>
-      <h2>Marks Scored in Courses</h2>
-      <canvas ref={chartRef} width="200" height="200"></canvas> {/* Set smaller dimensions */}
+    <nav>
+    <ul>
+      <li><button onClick={() => navigate("/profile")}>Profile</button></li>
+      <li><button onClick={() => navigate("/Performance")}>Performance</button></li>
+      <li><button onClick={() => navigate("/Assessment")}>Assessments</button></li>
+      <li><button onClick={() => navigate("/")}>Logout</button></li>
+    </ul>
+  </nav>
+  
+  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+    <div style={{ width: '400px', height: '150x' }}>
+    <h2>Marks Scored in Courses</h2>
+    <canvas ref={chartRef}></canvas>
     </div>
+  </div>
+  </div>
   );
+  
+  
 };
 
 export default Performance;

@@ -14,10 +14,10 @@ const topics = [
 ];
 
 const Assessment = () => {
-  const navigate =  useNavigate();
+  const navigate = useNavigate();
   return (
     <div>
-        <nav>
+      <nav>
         <ul>
           <li><button onClick={() => navigate("/profile")}>Profile</button></li>
           <li><button onClick={() => navigate("/Performance")}>Performance</button></li>
@@ -25,23 +25,25 @@ const Assessment = () => {
           <li><button onClick={() => navigate("/")}>Logout</button></li>
         </ul>
       </nav>
-      <h2>Online Quiz Links:</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Topic</th>
-            <th>Quiz Link</th>
-          </tr>
-        </thead>
-        <tbody>
-          {topics.map(topic => (
-            <tr key={topic.name}>
-              <td>{topic.name}</td>
-              <td><a href={topic.quizLink} target="_blank" rel="noopener noreferrer">Take Quiz</a></td>
+      <h2 style={{ textAlign: 'center' }}>Online Quiz Links:</h2>
+      <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <thead>
+            <tr>
+              <th style={{ border: '1px solid #ddd', padding: '8px', textAlign: 'left' }}>Topic</th>
+              <th style={{ border: '1px solid #ddd', padding: '8px', textAlign: 'left' }}>Quiz Link</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {topics.map(topic => (
+              <tr key={topic.name}>
+                <td style={{ border: '1px solid #ddd', padding: '8px' }}>{topic.name}</td>
+                <td style={{ border: '1px solid #ddd', padding: '8px' }}><a href={topic.quizLink} target="_blank" rel="noopener noreferrer">Take Quiz</a></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

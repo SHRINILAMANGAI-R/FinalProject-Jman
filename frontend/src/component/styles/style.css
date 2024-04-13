@@ -8,6 +8,7 @@ body {
    background: linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6) !important;
 }
 #calendar {
+    max-height:600px;
     max-width: 800px;
     margin: 40px auto;
     background: #fff;
@@ -75,9 +76,7 @@ body {
     padding: 5px;
 }
 
-/* .context-menu.show {
-    display: block;
-  } */
+
 
 .context-menu ul {
     list-style-type: none;

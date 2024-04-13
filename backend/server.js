@@ -66,8 +66,8 @@ app.post('/CreateUser', async (req, res) => {
       'INSERT INTO users (name, email, username, dob, role, department) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
       [name, email, username, dob, role, department]
     );
-
-    // Send email only if the role is admin
+    res.status(200).json({ message: 'User created successfully' });
+    // Send email 
     if (role === 'Admin' || role === 'Intern' || role === 'Employee') {
       await transporter.sendMail({
         from: 'shrinilamangai.r@gmail.com',
@@ -86,7 +86,7 @@ app.post('/CreateUser', async (req, res) => {
       console.error('Invalid user role:', role);
     }
 
-    res.status(200).json({ message: 'User created successfully' });
+    
   } catch (error) {
     console.error('Error during user creation:', error.message);
     res.status(500).json({ message: 'Error creating user' });
@@ -113,56 +113,6 @@ app.post('/change-password', async (req, res) => {
     }
   });
  
-// // Endpoint to fetch user profile data
-// app.get('/user-profile', async (req, res) => {
-//   try {
-//     // Query the database to fetch user data (replace this with your actual query)
-//     const userData = await pool.query('SELECT name, email, username, dob, password, role, department FROM users WHERE id = $1', [req.userId]); // Assuming userId is provided in the request
-//     res.json(userData.rows[0]);
-//   } catch (error) {
-//     console.error('Error fetching user profile:', error);
-//     res.status(500).json({ message: 'Error fetching user profile' });
-//   }
-// });
-
-// // Endpoint to update user profile data
-// app.put('/user-profile', async (req, res) => {
-//   const { name, email, username, dob, password, role, department } = req.body;
-//   try {
-//     // Update user data in the database (replace this with your actual update query)
-//     await pool.query('UPDATE users SET name = $1, email = $2, username = $3, dob = $4, password = $5, role = $6, department = $7 WHERE id = $8', [name, email, username, dob, password, role, department, req.userId]); // Assuming userId is provided in the request
-//     res.json({ message: 'User profile updated successfully' });
-//   } catch (error) {
-//     console.error('Error updating user profile:', error);
-//     res.status(500).json({ message: 'Error updating user profile' });
-//   }
-// });
-
-
-
-// Endpoint to fetch user profile data
-// app.get('/user-profile-fetch/:user', async (req, res) => {
-//   const user=req.params;
-//   console.log("username in profile",user)
-//   try {
-//     // Query the database to fetch user data
-//     const client = await pool.connect();
-//     const result = await client.query('SELECT name, email, username, dob, role, password, department FROM users WHERE username= $1', [user]);
-//     // console.log('response after passing username', result.username);
-//     // console.log('Query result:', result.rows);
-// return res.status(200).send(result)
-//     // const user = result.rows;
-//     client.release();
-//     // if (user.length > 0) {
-//     //   res.json(user[0]);
-//     // } else {
-//     //   res.status(404).json({ message: 'User not found' });
-//     // }
-//   } catch (error) {
-//     console.error('Error fetching user profile:', error.message);
-//     res.status(500).json({ message: 'Error fetching user profile' });
-//   }
-// });
 
 app.get('/user-profile-fetch/:user', async (req, res) => {
   const username = req.params.user;
@@ -175,11 +125,9 @@ app.get('/user-profile-fetch/:user', async (req, res) => {
     if (result.rows.length > 0) {
       return res.status(200).json(result.rows);
     } else {
-      console.log("getting empty array as the reponse")
       return res.status(404).json({ message: 'User not found' });
     }
   } catch (error) {
-    console.error('Error fetching user profile:', error.message);
     return res.status(500).json({ message: 'Error fetching user profile' });
   }
 });
@@ -200,85 +148,24 @@ app.put('/user-profile/:user', async (req, res) => {
 });
 
 
-
-app.get('/user-profile-fetch/:user', async (req, res) => {
-  const user=req.params;
-  console.log("username in profile",user)
-  try {
-    // Query the database to fetch user data
-    const client = await pool.connect();
-    const result = await client.query('SELECT name, email, username, dob, role, password, department FROM users WHERE username= $1', [user]);
-    // console.log('response after passing username', result.username);
-    // console.log('Query result:', result.rows);
-return res.status(200).send(result)
-    // const user = result.rows;
-    client.release();
-    // if (user.length > 0) {
-    //   res.json(user[0]);
-    // } else {
-    //   res.status(404).json({ message: 'User not found' });
-    // }
-  } catch (error) {
-    console.error('Error fetching user profile:', error.message);
-    res.status(500).json({ message: 'Error fetching user profile' });
-  }
-});
-
-
-
-app.get('/user-profile-fetch/:user', async (req, res) => {
-  const username = req.params.user;
-  console.log("username in profile", username);
-  try {
-    // Query the database to fetch user data
-    const client = await pool.connect();
-    const result = await client.query('SELECT * FROM users WHERE username = $1', [username]);
-    client.release();
-
-    if (result.rows.length > 0) {
-      return res.status(200).json(result.rows);
-    } else {
-      return res.status(404).json({ message: 'User not found' });
-    }
-  } catch (error) {
-    console.error('Error fetching user profile:', error.message);
-    return res.status(500).json({ message: 'Error fetching user profile' });
-  }
-});
-
-
-// On the backend, parse the request body properly
-// Endpoint to update user profile data
-app.put('/user-profile', async (req, res) => {
-  const { name, email, username, dob, password, role, department } = req.body;
-  try {
-    // Update user data in the database
-    await pool.query('UPDATE users SET name = $1, email = $2, username = $3, dob = $4, password = $5, role = $6, department = $7 WHERE username = $8', [name, email, username, dob, password, role, department, req.params.user]); // Assuming userId is provided in the request
-    res.json({ message: 'User profile updated successfully' });
-  } catch (error) {
-    console.error('Error updating user profile:', error);
-    res.status(500).json({ message: 'Error updating user profile' });
-  }
-});
-
-
 // Endpoint to store feedback
 app.post('/feedback', async (req, res) => {
-  const {id, Name, TrainingName, TrainerName, Feedback } = req.body;
+  const { id, name, trainingName, trainerName, feedback } = req.body;
 
   try {
     // Insert feedback into the database
     await pool.query(
       'INSERT INTO feedback (id, "Name", "TrainingName", "TrainerName", "Feedback") VALUES ($1, $2, $3, $4, $5)',
-      [id, Name, TrainingName, TrainerName, Feedback]
+      [id, name, trainingName, trainerName, feedback]
     );
 
-    res.status(201).json({ message: 'Feedback stored successfully', feedbackId });
+    res.status(201).json({ message: 'Feedback stored successfully', id });
   } catch (error) {
     console.error('Error storing feedback:', error);
     res.status(500).json({ message: 'Error storing feedback' });
   }
 });
+
 
 
 
@@ -436,21 +323,21 @@ app.put('/trainings/:id/module-completion', async (req, res) => {
   const trainingId = req.params.id;
 
   try {
-      // Find the training by ID
-      const training = await Training.findByPk(trainingId); // <-- Corrected here
+    // Find the training by ID
+    const training = await Training.findByPk(trainingId); // <-- Corrected here
 
-      if (!training) {
-          return res.status(404).json({ error: 'Training not found' });
-      }
+    if (!training) {
+      return res.status(404).json({ error: 'Training not found' });
+    }
 
-      // Update ModuleCompletion count
-      training.ModuleCompletion = training.ModuleCompletion ? training.ModuleCompletion + 1 : 1;
-      await training.save();
+    // Update ModuleCompletion count
+    training.ModuleCompletion = training.ModuleCompletion ? training.ModuleCompletion + 1 : 1;
+    await training.save();
 
-      return res.status(200).json({ message: 'Module completion count updated successfully' });
+    return res.status(200).json({ message: 'Module completion count updated successfully' });
   } catch (error) {
-      console.error('Error updating module completion count:', error);
-      return res.status(500).json({ error: 'Internal server error' });
+    console.error('Error updating module completion count:', error);
+    return res.status(500).json({ error: 'Internal server error' });
   }
 });
 
